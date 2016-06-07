@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+[ "$DEBUG" == 'true' ] && set -x
+
+exec syslogd -n -O /dev/stdout -S

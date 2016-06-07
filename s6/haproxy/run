@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+[ "$DEBUG" == 'true' ] && set -x
+
+"$(which haproxy-systemd-wrapper)" -f /usr/local/etc/haproxy/haproxy.cfg
