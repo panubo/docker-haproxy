@@ -1,4 +1,4 @@
-FROM docker.io/haproxy:1.6
+FROM docker.io/haproxy:1.6.11
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends busybox-syslogd curl ca-certificates && \
@@ -12,3 +12,4 @@ COPY haproxy.cfg /usr/local/etc/haproxy/haproxy.cfg
 
 ENTRYPOINT []
 CMD ["/bin/s6-svscan","/etc/s6"]
+ENV BUILD_VERSION v1.6.11-1
