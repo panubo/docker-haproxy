@@ -22,9 +22,9 @@ docker-release: ## Builds and pushes docker image
 	docker build -t $(NAME):$(VERSION) .
 	for reg in docker.io quay.io; do \
 		docker tag $(NAME):$(VERSION) $${reg}/$(NAME):$(VERSION); \
-		docker tag $(NAME):$(VERSION) $${reg}/$(NAME):v$(VERSION_MAJOR).$(VERSION_MINOR).$(VERSION_HOTFIX); \
-		docker tag $(NAME):$(VERSION) $${reg}/$(NAME):v$(VERSION_MAJOR).$(VERSION_MINOR); \
+		docker tag $(NAME):$(VERSION) $${reg}/$(NAME):$(VERSION_MAJOR).$(VERSION_MINOR).$(VERSION_HOTFIX); \
+		docker tag $(NAME):$(VERSION) $${reg}/$(NAME):$(VERSION_MAJOR).$(VERSION_MINOR); \
 		docker push $${reg}/$(NAME):$(VERSION); \
-		docker push $${reg}/$(NAME):v$(VERSION_MAJOR).$(VERSION_MINOR).$(VERSION_HOTFIX); \
-		docker push $${reg}/$(NAME):v$(VERSION_MAJOR).$(VERSION_MINOR); \
+		docker push $${reg}/$(NAME):$(VERSION_MAJOR).$(VERSION_MINOR).$(VERSION_HOTFIX); \
+		docker push $${reg}/$(NAME):$(VERSION_MAJOR).$(VERSION_MINOR); \
 	done
