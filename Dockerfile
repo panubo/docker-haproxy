@@ -33,4 +33,4 @@ COPY haproxy.cfg /usr/local/etc/haproxy/haproxy.cfg
 
 ENTRYPOINT []
 CMD ["/bin/s6-svscan","/etc/s6"]
-ENV BUILD_VERSION 1.6.13-1
+ENV BUILD_VERSION 1.6.13-2

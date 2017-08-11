@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+set -e
+
 [ "$DEBUG" == 'true' ] && set -x
 
-exec syslogd -n -O /dev/stdout -S
+# Defaults
+: ${LOGOUTPUT:='/dev/stdout'}
+
+echo "syslogd >> Setting syslogd output to ${LOGOUTPUT}"
+
+mkdir -p "$(dirname ${LOGOUTPUT})"
+
+exec syslogd -n -O ${LOGOUTPUT} -S
