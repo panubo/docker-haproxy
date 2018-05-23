@@ -14,7 +14,6 @@ git-release: ## Creates git tag for release
 	@echo "Make sure all changes are commited if this fails"
 	[ "x$$(git status --porcelain 2> /dev/null)" == "x" ]
 	git tag $(VERSION)
-	git push -u origin release/$(VERSION)
 	git push --tags
 
 docker-release: ## Builds and pushes docker image
