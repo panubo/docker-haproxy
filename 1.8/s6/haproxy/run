@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+[ "$DEBUG" == 'true' ] && set -x
+
+exec haproxy -W -p /run/haproxy.pid -f /usr/local/etc/haproxy/haproxy.cfg
