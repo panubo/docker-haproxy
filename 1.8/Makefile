@@ -19,7 +19,7 @@ git-release: ## Creates git tag for release
 docker-release: ## Builds and pushes docker image
 	git checkout tags/$(VERSION)
 	docker build -t $(NAME):$(VERSION) .
-	for reg in docker.io quay.io; do \
+	for reg in docker.io; do \
 		docker tag $(NAME):$(VERSION) $${reg}/$(NAME):$(VERSION); \
 		docker tag $(NAME):$(VERSION) $${reg}/$(NAME):$(VERSION_MAJOR).$(VERSION_MINOR).$(VERSION_HOTFIX); \
 		docker tag $(NAME):$(VERSION) $${reg}/$(NAME):$(VERSION_MAJOR).$(VERSION_MINOR); \

@@ -14,13 +14,12 @@ git-release: ## Creates git tag for release
 	@echo "Make sure all changes are commited if this fails"
 	[ "x$$(git status --porcelain 2> /dev/null)" == "x" ]
 	git tag $(VERSION)
-	git push -u origin release/$(VERSION)
 	git push --tags
 
 docker-release: ## Builds and pushes docker image
 	git checkout tags/$(VERSION)
 	docker build -t $(NAME):$(VERSION) .
-	for reg in docker.io quay.io; do \
+	for reg in docker.io; do \
 		docker tag $(NAME):$(VERSION) $${reg}/$(NAME):$(VERSION); \
 		docker tag $(NAME):$(VERSION) $${reg}/$(NAME):$(VERSION_MAJOR).$(VERSION_MINOR).$(VERSION_HOTFIX); \
 		docker tag $(NAME):$(VERSION) $${reg}/$(NAME):$(VERSION_MAJOR).$(VERSION_MINOR); \
