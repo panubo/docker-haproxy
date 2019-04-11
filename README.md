@@ -1,2 +1,3 @@
-# docker-haproxy
+# Docker HAProxy
+
 haproxy docker image with logging

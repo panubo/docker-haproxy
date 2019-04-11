@@ -1,4 +1,4 @@
-FROM docker.io/haproxy:1.8.8
+FROM docker.io/haproxy:1.8.19
 
 RUN set -x \
   && apt-get update \
@@ -39,4 +39,3 @@ COPY haproxy.cfg /usr/local/etc/haproxy/haproxy.cfg
 
 ENTRYPOINT []
 CMD ["/bin/s6-svscan","/etc/s6"]
-ENV BUILD_VERSION=1.8.8-1

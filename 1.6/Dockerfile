@@ -8,7 +8,7 @@ RUN apt-get update && \
 # Install socat for use for the haproxy stats socket.
 # socat that ships with debian doesn't compile with readline which is used for
 # interactive sessions with haproxy socket.
-RUN export SOCAT_VERSION=1.7.3.0 \
+RUN export SOCAT_VERSION=1.7.3.2 \
   && apt-get update \
   && apt-get install -y wget build-essential libssl-dev libreadline-dev libwrap0-dev \
   && cd /usr/local/src \
@@ -33,4 +33,3 @@ COPY haproxy.cfg /usr/local/etc/haproxy/haproxy.cfg
 
 ENTRYPOINT []
 CMD ["/bin/s6-svscan","/etc/s6"]
-ENV BUILD_VERSION 1.6.14-1
