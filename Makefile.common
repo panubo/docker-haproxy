@@ -1,0 +1,24 @@
+NAME                 := haproxy
+HAPROXY_VERSION      := $(shell sed -E -e '/^FROM/!d' -e 's/^FROM.*haproxy:v?([0-9]\.[0-9]\.[0-9]).*/\1/' Dockerfile)
+HAPROXY_VERSION_FULL := $(shell sed -E -e '/^FROM/!d' -e 's/^FROM.*haproxy:v?(.*)$$/\1/' Dockerfile)
+VERSION              := $(HAPROXY_VERSION)
+VERSION_FULL         := $(HAPROXY_VERSION_FULL)-$(shell date -u +%Y%m%d)
+IMAGE_NAME           := panubo/$(NAME)
+
+.PHONY: build push clean
+
+build:
+	docker build --pull -t $(IMAGE_NAME):$(VERSION_FULL) .
+	docker tag $(IMAGE_NAME):$(VERSION_FULL) $(IMAGE_NAME):$(VERSION)
+
+push:
+	docker push $(IMAGE_NAME):$(VERSION_FULL)
+	docker push $(IMAGE_NAME):$(VERSION)
+
+clean:
+	docker rmi $(IMAGE_NAME):$(VERSION_FULL)
+	docker rmi $(IMAGE_NAME):$(VERSION)
+
+version:
+	@echo "Image version is $(VERSION)"
+	@echo "Image full version is $(VERSION_FULL)"
