@@ -1,4 +1,4 @@
-FROM docker.io/haproxy:1.8.21
+FROM docker.io/haproxy:1.8.23
 
 RUN set -x \
   && apt-get update \

@@ -1,4 +1,4 @@
-FROM docker.io/haproxy:1.6.14
+FROM docker.io/haproxy:1.6.15
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends busybox-syslogd curl ca-certificates && \
