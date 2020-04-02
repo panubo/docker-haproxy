@@ -1,5 +1,5 @@
 NAME                 := haproxy
-HAPROXY_VERSION      := $(shell sed -E -e '/^FROM/!d' -e 's/^FROM.*haproxy:v?([0-9]\.[0-9]\.[0-9]).*/\1/' Dockerfile)
+HAPROXY_VERSION      := $(shell sed -E -e '/^FROM/!d' -e 's/^FROM.*haproxy:v?([0-9]+\.[0-9]+\.[0-9]+).*/\1/' Dockerfile)
 HAPROXY_VERSION_FULL := $(shell sed -E -e '/^FROM/!d' -e 's/^FROM.*haproxy:v?(.*)$$/\1/' Dockerfile)
 VERSION              := $(HAPROXY_VERSION)
 VERSION_FULL         := $(HAPROXY_VERSION_FULL)-$(shell date -u +%Y%m%d)
