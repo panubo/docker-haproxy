@@ -1,4 +1,4 @@
-FROM haproxy:2.0.14-alpine
+FROM haproxy:2.0.22-alpine
 
 RUN set -x \
   && apk --no-cache add socat \
