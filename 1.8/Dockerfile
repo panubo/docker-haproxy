@@ -11,7 +11,7 @@ RUN set -x \
 # socat that ships with debian doesn't compile with readline which is used for
 # interactive sessions with haproxy socket.
 RUN set -x \
-  && export SOCAT_VERSION=1.7.3.2 \
+  && export SOCAT_VERSION=1.7.4.1 \
   && apt-get update \
   && apt-get install -y wget build-essential libssl-dev libreadline-dev libwrap0-dev \
   && cd /usr/local/src \
@@ -30,7 +30,7 @@ RUN set -x \
   ;
 
 RUN set -x \
-  && curl -L https://github.com/just-containers/skaware/releases/download/v1.19.1/s6-2.4.0.0-linux-amd64-bin.tar.gz | tar -C / -zxf - \
+  && curl -L https://github.com/just-containers/skaware/releases/download/v2.0.5/s6-2.10.0.0-linux-amd64-bin.tar.gz | tar -C / -zxf - \
   ;
 
 COPY reload.sh /reload

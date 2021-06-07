@@ -2,8 +2,6 @@ FROM haproxy:2.0.22-alpine
 
 RUN set -x \
   && apk --no-cache add socat \
-  && addgroup -g 1000 haproxy \
-  && adduser -s /sbin/nologin -G haproxy -u 1000 -H -D haproxy \
   ;
 
 ENV \
