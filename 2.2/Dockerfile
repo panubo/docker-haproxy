@@ -1,4 +1,4 @@
-FROM haproxy:2.1.12-alpine
+FROM haproxy:2.2.16-alpine
 
 RUN set -x \
   && apk --no-cache add socat \
@@ -11,8 +11,8 @@ ENV \
 CMD ["haproxy", "-S", "/var/run/haproxy-master.sock,mode,660,level,user", "-f", "/usr/local/etc/haproxy/haproxy.cfg"]
 
 ENV \
-  DATAPLANEAPI_VERSION=1.2.4 \
-  DATAPLANEAPI_CHECKSUM=3b9b44f1a14ce84c0b5fbb514b8fe01bba10223ac003404929a5bfcddf3bffdf
+  DATAPLANEAPI_VERSION=1.2.5 \
+  DATAPLANEAPI_CHECKSUM=0359966747490b55e6ea8c75a9b4969c707ce644dd8041ad8afb49882b97f3a1
 
 RUN set -x \
   && wget "https://github.com/haproxytech/dataplaneapi/releases/download/v${DATAPLANEAPI_VERSION}/dataplaneapi" \
