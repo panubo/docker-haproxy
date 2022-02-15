@@ -15,3 +15,11 @@ push:
 clean:
 	docker rmi $(NAME):$(VERSION)
 	docker rmi $(NAME):$(VERSION_MAJOR).$(VERSION_MINOR)
+
+test:
+	TARGET_IMAGE=$(NAME) TARGET_VERSION=$(VERSION) TARGET_PORT=80 bats ../tests/
+
+build-with-cache:
+	# Used by CI to speed up build and test process
+	docker pull $(NAME):$(VERSION)
+	docker build -t $(NAME):$(VERSION) --cache-from $(NAME):$(VERSION) .

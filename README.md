@@ -40,3 +40,7 @@ prompt
 # master socket (show proc)
 socat /run/haproxy-master.sock readline
 ```
+
+## Non-root usage
+
+From version 2.5 the image is tested running as non-root user `haproxy`

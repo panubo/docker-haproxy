@@ -1,4 +1,4 @@
-SUBDIRS := 1.8 2.0 2.2
+SUBDIRS := 1.8 2.0 2.2 2.5
 
 .PHONY: build push clean version
 
@@ -18,6 +18,16 @@ clean:
 	done
 
 version:
+	for dir in $(SUBDIRS); do \
+		make TAG=$${dir//\//-} -C $$dir $(MAKECMDGOALS); \
+	done
+
+test:
+	for dir in $(SUBDIRS); do \
+		make TAG=$${dir//\//-} -C $$dir $(MAKECMDGOALS); \
+	done
+
+build-with-cache:
 	for dir in $(SUBDIRS); do \
 		make TAG=$${dir//\//-} -C $$dir $(MAKECMDGOALS); \
 	done

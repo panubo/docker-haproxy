@@ -11,7 +11,7 @@ RUN set -x \
 # socat that ships with debian doesn't compile with readline which is used for
 # interactive sessions with haproxy socket.
 RUN set -x \
-  && export SOCAT_VERSION=1.7.4.1 \
+  && export SOCAT_VERSION=1.7.4.3 \
   && apt-get update \
   && apt-get install -y wget build-essential libssl-dev libreadline-dev libwrap0-dev \
   && cd /usr/local/src \

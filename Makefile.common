@@ -5,10 +5,14 @@ VERSION              := $(HAPROXY_VERSION)
 VERSION_FULL         := $(HAPROXY_VERSION_FULL)-$(shell date -u +%Y%m%d)
 IMAGE_NAME           := panubo/$(NAME)
 
-.PHONY: build push clean
+.PHONY: build build-quick push clean version run
 
 build:
 	docker build --pull -t $(IMAGE_NAME):$(VERSION_FULL) .
+	docker tag $(IMAGE_NAME):$(VERSION_FULL) $(IMAGE_NAME):$(VERSION)
+
+build-quick:
+	docker build -t $(IMAGE_NAME):$(VERSION_FULL) .
 	docker tag $(IMAGE_NAME):$(VERSION_FULL) $(IMAGE_NAME):$(VERSION)
 
 push:
@@ -22,3 +26,14 @@ clean:
 version:
 	@echo "Image version is $(VERSION)"
 	@echo "Image full version is $(VERSION_FULL)"
+
+run:
+	docker run --rm -it --name haproxy-$(VERSION) -p 8080:8080 -p 5555:5555 -p 9000:9000 --user haproxy:haproxy $(IMAGE_NAME):$(VERSION)
+
+test:
+	TARGET_IMAGE=$(IMAGE_NAME) TARGET_VERSION=$(VERSION) bats ../tests/
+
+build-with-cache:
+	# Used by CI to speed up build and test process
+	-docker pull $(IMAGE_NAME):$(VERSION)
+	docker build -t $(IMAGE_NAME):$(VERSION) --cache-from $(IMAGE_NAME):$(VERSION) .
