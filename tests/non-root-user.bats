@@ -14,7 +14,7 @@ load setup.bash
 		skip
 	fi
 
-	run curl -sSf http://${container_ip}:${PORT}/healthz
+	run curl -sSf http://127.0.0.1:${container_http_port}/healthz
 	# diag "${output}"
 	[[ "${status}" -eq 0 ]]
 }

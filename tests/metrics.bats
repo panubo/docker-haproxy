@@ -9,7 +9,7 @@ load setup.bash
 		skip
 	fi
 
-	run curl -sSf http://${container_ip}:9000/metrics
+	run curl -sSf http://127.0.0.1:${container_metrics_port}/metrics
 	# diag "${output}"
 	[[ "${status}" -eq 0 ]]
 }

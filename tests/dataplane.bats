@@ -17,12 +17,14 @@ load setup.bash
 	# Quick info test
 	# curl -sSf -X GET --user admin:adminpwd http://${container_ip}:5555/v2/info
 
+	( wait_http "http://127.0.0.1:${container_api_port}"; )
+
 	# Add a server to the default backend
 	curl -sSf -X POST \
 	  --user admin:adminpwd \
 	  -H "Content-Type: application/json" \
 	  -d '{"name": "websrv3", "address": "192.168.1.1", "port": 8088, "check": "enabled", "maxconn": 30, "weight": 10}' \
-	  "http://${container_ip}:5555/v2/services/haproxy/configuration/servers?backend=default&version=1&force_reload=true"
+	  "http://127.0.0.1:${container_api_port}/v2/services/haproxy/configuration/servers?backend=default&version=1&force_reload=true"
 
 	# The forced reload seems to be quick enough
 	# sleep 1

@@ -7,9 +7,12 @@ setup() {
 	fi
 	# setup runs before each test
 	# Important: we aren't exposing port etc so running tests in parallel works
-	container="$(docker run -d ${DOCKER_ARGS} ${TARGET_IMAGE}:${TARGET_VERSION})"
+	container="$(docker run -d ${DOCKER_ARGS} -p "${PORT}" -p 5555 -p 9000 ${TARGET_IMAGE}:${TARGET_VERSION})"
 	container_ip="$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' ${container})"
-	( wait_http "http://${container_ip}:${PORT}"; )
+	container_http_port="$(docker inspect --format '{{(index (index .NetworkSettings.Ports "'${PORT}'/tcp") 0).HostPort}}' ${container})"
+	container_api_port="$(docker inspect --format '{{(index (index .NetworkSettings.Ports "5555/tcp") 0).HostPort}}' ${container})"
+	container_metrics_port="$(docker inspect --format '{{(index (index .NetworkSettings.Ports "9000/tcp") 0).HostPort}}' ${container})"
+	( wait_http "http://127.0.0.1:${container_http_port}"; )
 }
 
 teardown() {
