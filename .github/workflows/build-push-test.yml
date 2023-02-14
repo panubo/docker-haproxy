@@ -21,9 +21,13 @@ jobs:
 
       - name: Get image version(s)
         id: image_version
+        # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#multiline-strings
         run: |
           cd ${{ matrix.version }}
-          make _ci_version >> $GITHUB_OUTPUT
+          delimiter="$(openssl rand -hex 8)"
+          echo "image_name<<${delimiter}" >> "${GITHUB_OUTPUT}"
+          make _ci_version >> "${GITHUB_OUTPUT}"
+          echo "${delimiter}" >> "${GITHUB_OUTPUT}"
 
       - name: Docker meta
         id: meta
@@ -74,7 +78,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           builder: ${{ steps.buildx.outputs.name }}
-          context: "{{defaultContext}}:${{ matrix.version }}"
+          context: ./${{ matrix.version }}
           file: Dockerfile
           cache-from: type=gha
           load: true
@@ -89,7 +93,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           builder: ${{ steps.buildx.outputs.name }}
-          context: "{{defaultContext}}:${{ matrix.version }}"
+          context: ./${{ matrix.version }}
           file: Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
           cache-from: type=gha
