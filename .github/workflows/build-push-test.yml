@@ -25,7 +25,7 @@ jobs:
         run: |
           cd ${{ matrix.version }}
           delimiter="$(openssl rand -hex 8)"
-          echo "image_name<<${delimiter}" >> "${GITHUB_OUTPUT}"
+          echo "image_version<<${delimiter}" >> "${GITHUB_OUTPUT}"
           make _ci_version >> "${GITHUB_OUTPUT}"
           echo "${delimiter}" >> "${GITHUB_OUTPUT}"
 
@@ -79,7 +79,6 @@ jobs:
         with:
           builder: ${{ steps.buildx.outputs.name }}
           context: ./${{ matrix.version }}
-          file: Dockerfile
           cache-from: type=gha
           load: true
           tags: ${{ env.IMAGE_NAME }}:test
@@ -94,7 +93,6 @@ jobs:
         with:
           builder: ${{ steps.buildx.outputs.name }}
           context: ./${{ matrix.version }}
-          file: Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
