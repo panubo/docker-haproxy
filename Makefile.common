@@ -37,3 +37,9 @@ build-with-cache:
 	# Used by CI to speed up build and test process
 	-docker pull $(IMAGE_NAME):$(VERSION)
 	docker build -t $(IMAGE_NAME):$(VERSION) --cache-from $(IMAGE_NAME):$(VERSION) .
+
+_ci_test:
+	TARGET_IMAGE=panubo/haproxy TARGET_VERSION=test bats ../tests/
+
+_ci_version:
+	@echo 'image_version=$(VERSION)\n$(VERSION_FULL)'
