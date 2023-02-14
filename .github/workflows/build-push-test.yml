@@ -71,10 +71,10 @@ jobs:
           bats-version: 1.7.0
 
       - name: Build and export to Docker
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           builder: ${{ steps.buildx.outputs.name }}
-          context: ${{ matrix.version }}
+          context: "{{defaultContext}}:${{ matrix.version }}"
           file: Dockerfile
           cache-from: type=gha
           load: true
@@ -89,7 +89,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           builder: ${{ steps.buildx.outputs.name }}
-          context: ${{ matrix.version }}
+          context: "{{defaultContext}}:${{ matrix.version }}"
           file: Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
           cache-from: type=gha

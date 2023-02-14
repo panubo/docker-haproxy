@@ -42,4 +42,4 @@ _ci_test:
 	TARGET_IMAGE=panubo/haproxy TARGET_VERSION=test bats ../tests/
 
 _ci_version:
-	@echo 'image_version=$(VERSION)\n$(VERSION_FULL)'
+	@echo 'image_version=$(VERSION)%0A$(VERSION_FULL)'
