@@ -17,7 +17,7 @@ clean:
 	docker rmi $(NAME):$(VERSION_MAJOR).$(VERSION_MINOR)
 
 test:
-	TARGET_IMAGE=$(NAME) TARGET_VERSION=$(VERSION) TARGET_PORT=80 bats ../tests/
+	TARGET_IMAGE=$(NAME):$(VERSION) TARGET_PORT=80 bats ../tests/
 
 build-with-cache:
 	# Used by CI to speed up build and test process
@@ -25,7 +25,7 @@ build-with-cache:
 	docker build -t $(NAME):$(VERSION) --cache-from $(NAME):$(VERSION) .
 
 _ci_test:
-	TARGET_IMAGE=panubo/haproxy TARGET_VERSION=test TARGET_PORT=80 bats ../tests/
+	TARGET_IMAGE=panubo/haproxy:test TARGET_PORT=80 bats ../tests/
 
 _ci_version:
 	@echo "$(VERSION)"

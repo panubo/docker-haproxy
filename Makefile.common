@@ -31,7 +31,7 @@ run:
 	docker run --rm -it --name haproxy-$(VERSION) -p 8080:8080 -p 5555:5555 -p 9000:9000 --user haproxy:haproxy $(IMAGE_NAME):$(VERSION)
 
 test:
-	TARGET_IMAGE=$(IMAGE_NAME) TARGET_VERSION=$(VERSION) bats ../tests/
+	TARGET_IMAGE=$(IMAGE_NAME):$(VERSION) bats ../tests/
 
 build-with-cache:
 	# Used by CI to speed up build and test process
@@ -39,7 +39,7 @@ build-with-cache:
 	docker build -t $(IMAGE_NAME):$(VERSION) --cache-from $(IMAGE_NAME):$(VERSION) .
 
 _ci_test:
-	TARGET_IMAGE=panubo/haproxy TARGET_VERSION=test bats ../tests/
+	TARGET_IMAGE=panubo/haproxy:test bats ../tests/
 
 _ci_version:
 	@echo "$(VERSION)"

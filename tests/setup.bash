@@ -1,4 +1,5 @@
 PORT="${TARGET_PORT:-8080}"
+TARGET_VERSION="$(docker inspect --format '{{range .Config.Env}}{{println .}}{{end}}' ${TARGET_IMAGE} | sed -E -e '/HAPROXY_VERSION/!d' -e 's/^[^=]+=//')"
 
 setup() {
 	# setup() is run regardless of test skip, since we mainly skip due to a minimum version we'll return early to save time
@@ -7,7 +8,7 @@ setup() {
 	fi
 	# setup runs before each test
 	# Important: we aren't exposing port etc so running tests in parallel works
-	container="$(docker run -d ${DOCKER_ARGS} -p "${PORT}" -p 5555 -p 9000 ${TARGET_IMAGE}:${TARGET_VERSION})"
+	container="$(docker run -d ${DOCKER_ARGS} -p "${PORT}" -p 5555 -p 9000 ${TARGET_IMAGE})"
 	container_ip="$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' ${container})"
 	container_http_port="$(docker inspect --format '{{(index (index .NetworkSettings.Ports "'${PORT}'/tcp") 0).HostPort}}' ${container})"
 	container_api_port="$(docker inspect --format '{{(index (index .NetworkSettings.Ports "5555/tcp") 0).HostPort}}' ${container})"
